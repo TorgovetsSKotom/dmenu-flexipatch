@@ -20,10 +20,7 @@ options:
 config.h:
 	cp config.def.h $@
 
-patches.h:
-	cp patches.def.h $@
-
-$(OBJ): arg.h config.h config.mk drw.h patches.h
+$(OBJ): arg.h config.h config.mk drw.h
 
 dmenu: dmenu.o drw.o util.o
 	$(CC) -o $@ dmenu.o drw.o util.o $(LDFLAGS)

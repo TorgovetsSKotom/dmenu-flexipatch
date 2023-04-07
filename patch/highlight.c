@@ -1,19 +1,9 @@
 static void
-#if EMOJI_HIGHLIGHT_PATCH
-drawhighlights(struct item *item, char *output, int x, int y, int maxw)
-#else
 drawhighlights(struct item *item, int x, int y, int maxw)
-#endif // EMOJI_HIGHLIGHT_PATCH
 {
 	char restorechar, tokens[sizeof text], *highlight,  *token;
 	int indentx, highlightlen;
-	#if EMOJI_HIGHLIGHT_PATCH
-	char *itemtext = output;
-	#elif TSV_PATCH && !SEPARATOR_PATCH
-	char *itemtext = item->stext;
-	#else
 	char *itemtext = item->text;
-	#endif // EMOJI_HIGHLIGHT_PATCH | TSV_PATCH
 
 	drw_setscheme(drw, scheme[item == sel ? SchemeSelHighlight : SchemeNormHighlight]);
 	strcpy(tokens, text);
@@ -37,9 +27,6 @@ drawhighlights(struct item *item, int x, int y, int maxw)
 					y,
 					MIN(maxw - indentx, TEXTW(highlight) - lrpad),
 					bh, 0, highlight, 0
-					#if PANGO_PATCH
-					, True
-					#endif // PANGO_PATCH
 				);
 			highlight[strlen(token)] = restorechar;
 
